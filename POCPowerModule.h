@@ -8,7 +8,7 @@ using namespace std;
 
 class POCPowerModule : public BasicPOCModule {
 private:
-	static list<POCPowerModule&> moduleList;
+	static list<POCPowerModule*> moduleList;
 	PowerLogger POWERLOGGER{ "Power Logger", 0x00 };
 public:
 	POCPowerModule();

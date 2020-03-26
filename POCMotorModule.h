@@ -6,7 +6,7 @@
 
 class POCMotorModule : public BasicPOCModule {
 private:
-	static list<POCMotorModule&> moduleList;
+	static list<POCMotorModule*> moduleList;
 public:
 	POCMotorModule();
 	void init() final;

@@ -1,9 +1,9 @@
 #include "POCMotorModule.h"
 
-list<POCMotorModule&> POCMotorModule::moduleList;
+list<POCMotorModule*> POCMotorModule::moduleList;
 
 POCMotorModule::POCMotorModule() : BasicPOCModule::BasicPOCModule("Motor Module " + to_string(moduleList.size()), 0x00) {
-	moduleList.push_back(*this);
+	moduleList.push_back(this);
 	//TODO
 }
 
@@ -16,5 +16,5 @@ void POCMotorModule::selfTest() {
 }
 
 POCMotorModule::~POCMotorModule() {
-	moduleList.remove(*this);
+	moduleList.remove(this);
 }

@@ -1,9 +1,9 @@
 #include "POCPowerModule.h"
 
-list<POCPowerModule&> POCPowerModule::moduleList;
+list<POCPowerModule*> POCPowerModule::moduleList;
 
 POCPowerModule::POCPowerModule() : BasicPOCModule::BasicPOCModule("Power Module " + to_string(POCPowerModule::moduleList.size()), 0x00) {
-	POCPowerModule::moduleList.push_back(*this);
+	POCPowerModule::moduleList.push_back(this);
 	//TODO
 }
 
@@ -26,5 +26,5 @@ double POCPowerModule::getBatteryState() {
 }
 
 POCPowerModule::~POCPowerModule() {
-	moduleList.remove(*this);
+	moduleList.remove(this);
 }

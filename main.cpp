@@ -20,7 +20,7 @@ int main() {
 
 	BasicPOCModule::listAllModules();
 
-	delete &MOTORMODULE1;
+	//delete &MOTORMODULE1;
 
 	BasicPOCModule::listAllModules();
 
