@@ -15,12 +15,12 @@ int main() {
 	new POCMotorModule();
 	new POCMotorModule();
 
-	POCMotorModule MOTORMODULE1;
+	POCMotorModule* MOTORMODULE1 = new POCMotorModule();
 	POCPowerModule POWERMODULE;
 
 	BasicPOCModule::listAllModules();
 
-	//delete &MOTORMODULE1;
+	delete MOTORMODULE1;
 
 	BasicPOCModule::listAllModules();
 
