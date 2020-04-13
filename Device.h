@@ -2,6 +2,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -19,10 +20,11 @@ private:
 protected:	
 
 	/// @brief	List of devices
-	static list<Device*> DeviceList;
+	static list<Device*> deviceList;
 
 	/// @brief	The user friendly name of this device
 	string name;
+	
 public:
 
 	///-------------------------------------------------------------------------------------------------

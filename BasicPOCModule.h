@@ -2,6 +2,7 @@
 #include "Device.h"
 #include "POCController.h"
 #include <list>
+#include <memory>
 
 using namespace std;
 
@@ -43,6 +44,8 @@ protected:
 	/// @date	09.01.2020
 
 	void deactivate();
+
+
 public:
 
 	///-------------------------------------------------------------------------------------------------
@@ -86,6 +89,10 @@ public:
 	/// @author	Benjamin
 	/// @date	16.01.2020
 
-	~BasicPOCModule();
+	virtual const uint16_t getId() = 0;
+
+	virtual const string getClassName() = 0;
+
+	virtual ~BasicPOCModule();
 };
 

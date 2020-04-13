@@ -1,0 +1,5 @@
+﻿  Quellen werden überprüft.
+  Quellen werden remote nach "192.168.138.129" kopiert.
+  Die Architektur wird überprüft.
+  Die Architektur wird überprüft.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Application Type\Linux\1.0\Linux.targets(174,5): error : Die aktuelle Projektarchitektur "x86" ist mit der Remotesystemarchitektur "x64" nicht kompatibel (x64). Wechseln Sie im Konfigurations-Manager zur Projektarchitektur "x64".

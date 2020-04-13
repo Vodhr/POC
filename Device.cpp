@@ -1,11 +1,11 @@
 #include "Device.h"
 
-list<Device*> Device::DeviceList;
+list<Device*> Device::deviceList;
 
 Device::Device(string name) {
 	this->name = name;
 
-	Device::DeviceList.push_back(this);
+	Device::deviceList.push_back(this);
 }
 
 string Device::getName() {
@@ -13,17 +13,17 @@ string Device::getName() {
 }
 
 void Device::initAll() {
-	for (auto e = DeviceList.begin(); e != DeviceList.end(); e++) {
+	for (auto e = deviceList.begin(); e != deviceList.end(); e++) {
 		(*e)->init();
 	}
 }
 
 void Device::selfTestAll() {
-	for (auto e = DeviceList.begin(); e != DeviceList.end(); e++) {
+	for (auto e = deviceList.begin(); e != deviceList.end(); e++) {
 		(*e)->selfTest();
 	}
 }
 
 Device::~Device() {
-	DeviceList.remove(this);
+	deviceList.remove(this);
 }

@@ -58,5 +58,7 @@ public:
 	/// @param 		   	nrx	The number of bytes to be received.
 
 	void transfere(char* tx, char* rx, int ntx, int nrx);
+
+	short getI2CAddress();
 };
 

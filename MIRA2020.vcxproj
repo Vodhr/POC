@@ -76,24 +76,20 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="BasicPOCModule.cpp" />
-    <ClCompile Include="BDLCMotorDriver.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="I2CDevice.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Module_Battery_Management_System.cpp" />
     <ClCompile Include="POCController.cpp" />
-    <ClCompile Include="POCMotorModule.cpp" />
-    <ClCompile Include="POCPowerModule.cpp" />
     <ClCompile Include="PowerLogger.cpp" />
     <ClCompile Include="SPIDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicPOCModule.h" />
-    <ClInclude Include="BDLCMotorDriver.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="I2CDevice.h" />
+    <ClInclude Include="Module_Battery_Management_System.h" />
     <ClInclude Include="POCController.h" />
-    <ClInclude Include="POCMotorModule.h" />
-    <ClInclude Include="POCPowerModule.h" />
     <ClInclude Include="PowerLogger.h" />
     <ClInclude Include="SPIDevice.h" />
   </ItemGroup>

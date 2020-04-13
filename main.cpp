@@ -1,28 +1,20 @@
-#include "POCPowerModule.h"
-#include "POCMotorModule.h"
+#include "Module_Battery_Management_System.h"
 #include "BasicPOCModule.h"
 
 using namespace std;
 
 int main() {
-	new POCPowerModule();
-	new POCPowerModule();
-	new POCMotorModule();
+	Module_Battery_Management_System* BMS = new Module_Battery_Management_System();
+	Module_Battery_Management_System* BMS2 = new Module_Battery_Management_System();
+	BasicPOCModule::listAllModules();
 
-	new POCPowerModule();
-	new POCPowerModule();
-	new POCMotorModule();
-	new POCMotorModule();
-	new POCMotorModule();
+	delete BMS;
 
-	POCMotorModule* MOTORMODULE1 = new POCMotorModule();
-	POCPowerModule POWERMODULE;
+	cout << "-------------------\n";
 
 	BasicPOCModule::listAllModules();
 
-	delete MOTORMODULE1;
-
-	BasicPOCModule::listAllModules();
+	delete BMS2;
 
 	string a;
 

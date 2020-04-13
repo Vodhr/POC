@@ -12,3 +12,7 @@ I2CDevice::I2CDevice(string name, short slaveID, bool supports10BitAddressing, l
 void I2CDevice::transfere(char* tx, char* rx, int ntx, int nrx) {
 	//TODO
 }
+
+short I2CDevice::getI2CAddress() {
+	return slaveID;
+}
