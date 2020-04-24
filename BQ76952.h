@@ -6,6 +6,7 @@ class BQ76952 :
 
 	struct Status5 {
 		//TODO
+
 	};
 
 	void init() final;

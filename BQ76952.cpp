@@ -14,4 +14,5 @@ void BQ76952::selfTest() {
 
 BQ76952::Status5 BQ76952::getStatus5() {
 	//TODO
+	return Status5();
 }
