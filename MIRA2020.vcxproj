@@ -83,7 +83,6 @@
     <ClCompile Include="Module_Battery_Management_System.cpp" />
     <ClCompile Include="POCController.cpp" />
     <ClCompile Include="SPIDevice.cpp" />
-    <ClCompile Include="TimedState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicPOCModule.h" />
