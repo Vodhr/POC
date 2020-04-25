@@ -1,17 +1,22 @@
 #pragma once
 #include "I2CDevice.h"
+#include "TimedState.h"
+
+struct Status5 {
+	//TODO
+
+};
+
 class BQ76952 :
 	public I2CDevice {
+
+	TimedState<Status5> STATUS5;
+
 	BQ76952();
-
-	struct Status5 {
-		//TODO
-
-	};
 
 	void init() final;
 	void selfTest() final;
 
-	Status5 getStatus5();
+	TimedState<Status5> getStatus5();
 };
 

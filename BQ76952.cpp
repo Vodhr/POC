@@ -12,7 +12,7 @@ void BQ76952::selfTest() {
 	//TODO
 }
 
-BQ76952::Status5 BQ76952::getStatus5() {
+TimedState<Status5> BQ76952::getStatus5() {
 	//TODO
-	return Status5();
+	return STATUS5;
 }
