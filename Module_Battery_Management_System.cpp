@@ -21,7 +21,11 @@ const string Module_Battery_Management_System::getClassName() {
 	return "Battery Management System";
 }
 
-Module_Battery_Management_System::Cell::Cell(unsigned int number) : number(number) {
+Module_Battery_Management_System::Cell::Cell(unsigned int number) : number(number), maxVoltage(3.3) {
+
+}
+
+Module_Battery_Management_System::Cell::Cell(unsigned int number, double maxVoltage) : number(number), maxVoltage(maxVoltage) {
 
 }
 
@@ -30,8 +34,12 @@ unsigned int Module_Battery_Management_System::Cell::getNumber() {
 }
 
 double Module_Battery_Management_System::Cell::getVoltage() {
-	//TODO, has tu update first
-	return voltage;
+	//TODO
+	return 0.0;
+}
+
+double Module_Battery_Management_System::Cell::getMaxVoltage() {
+	return maxVoltage;
 }
 
 void Module_Battery_Management_System::addCell(unsigned int cellNumber) {
@@ -57,8 +65,44 @@ void Module_Battery_Management_System::removeCell(unsigned int cellNumber) {
 }
 
 void Module_Battery_Management_System::useAllCells() {
-	unsigned int maxCells = 8;		//this might not be correct
+	const unsigned int maxCells = 8;		//this might not be correct
 	for (unsigned int i = 0; i < maxCells; i++) {
 		Module_Battery_Management_System::addCell(i);
 	}
+}
+
+double Module_Battery_Management_System::getBatteryState() {
+	double batteryState = 0;
+	for (auto e = cells.begin(); e != cells.end(); e++) {
+		batteryState += (*e)->getVoltage / (*e)->getMaxVoltage();
+	}
+
+	batteryState /= cells.size();
+
+	return batteryState;
+}
+
+double Module_Battery_Management_System::getCellVoltage(unsigned int cellNumber) {
+	bool found = false;
+	shared_ptr<Cell> foundCell;
+
+	for (auto e = cells.begin(); e != cells.end(); e++) {
+		if ((*e)->getNumber == cellNumber) {
+			if (!found) {
+				foundCell = *e;
+				found = true;
+			}
+			else {
+				//TODO
+				throw new exception();
+			}
+		}
+	}
+
+	return foundCell->getVoltage();
+}
+
+double Module_Battery_Management_System::getCurrentDraw() {
+	//TODO
+	return 0.0;
 }

@@ -9,10 +9,12 @@ public:
 	class Cell {
 	public:
 		Cell(unsigned int number);
+		Cell(unsigned int number, double maxVoltage);
 		unsigned int getNumber();
 		double getVoltage();
+		double getMaxVoltage();
 	private:
-		double voltage;
+		double maxVoltage;
 		unsigned int number;
 	};
 
@@ -27,5 +29,9 @@ public:
 	void addCell(unsigned int cellNUmber);
 	void removeCell(unsigned int cellNumber);
 	void useAllCells();
+
+	double getBatteryState();
+	double getCellVoltage(unsigned int cellNumber);
+	double getCurrentDraw();
 };
 
