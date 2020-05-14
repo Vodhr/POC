@@ -1,7 +1,7 @@
 #include "Module_Battery_Management_System.h"
 
 Module_Battery_Management_System::Module_Battery_Management_System() 
-	: BasicPOCModule(getClassName(), 0x42) {
+	: BasicPOCModule(getClassName(), 0x42), bq(this){
 
 }
 
@@ -14,6 +14,7 @@ void Module_Battery_Management_System::selfTest() {
 }
 
 const uint16_t Module_Battery_Management_System::getId() {
+	//See PoC Module Table
 	return 0x020;
 }
 
@@ -21,11 +22,7 @@ const string Module_Battery_Management_System::getClassName() {
 	return "Battery Management System";
 }
 
-Module_Battery_Management_System::Cell::Cell(unsigned int number) : number(number), maxVoltage(3.3) {
-
-}
-
-Module_Battery_Management_System::Cell::Cell(unsigned int number, double maxVoltage) : number(number), maxVoltage(maxVoltage) {
+Module_Battery_Management_System::Cell::Cell(unsigned int number) : number(number) {
 
 }
 
@@ -38,71 +35,72 @@ double Module_Battery_Management_System::Cell::getVoltage() {
 	return 0.0;
 }
 
+void Module_Battery_Management_System::Cell::setMaxVoltage(double maxVoltage) {
+	this->maxVoltage = maxVoltage;
+}
+
 double Module_Battery_Management_System::Cell::getMaxVoltage() {
 	return maxVoltage;
 }
 
-void Module_Battery_Management_System::addCell(unsigned int cellNumber) {
-	bool found = false;
+void Module_Battery_Management_System::Cell::setMaxCapacity(double maxCapacity) {
+	this->maxCapacity = maxCapacity;
+}
+
+double Module_Battery_Management_System::Cell::getMaxCapacity() {
+	return maxCapacity;
+}
+
+void Module_Battery_Management_System::Cell::setMinVoltage(double minVoltage) {
+	this->minVoltage = minVoltage;
+}
+
+double Module_Battery_Management_System::Cell::getMinVoltage() {
+	return minVoltage;
+}
+
+bool Module_Battery_Management_System::Cell::getIsActive() {
+	return isActive;
+}
+
+void Module_Battery_Management_System::Cell::activate() {
+	isActive = true;
+}
+
+void Module_Battery_Management_System::Cell::deactivate() {
+	isActive = false;
+}
+
+double Module_Battery_Management_System::getBatteryCapacityLeft() {
+	double capacityLeft = 0;
 
 	for (auto e = cells.begin(); e != cells.end(); e++) {
-		if ((*e)->getNumber() == cellNumber) {
-			found = true;
+		if ((*e)->getIsActive()) {
+			//TODO Battery is no Capacitor lul
+			capacityLeft += (*e)->getVoltage() / (*e)->getMaxVoltage() * (*e)->getMaxCapacity();
 		}
 	}
 
-	if (!found) {
-		cells.push_back(make_shared<Module_Battery_Management_System::Cell>(cellNumber));
-	}
+	return capacityLeft;
 }
 
-void Module_Battery_Management_System::removeCell(unsigned int cellNumber) {
+double Module_Battery_Management_System::getBatteryMaxCapacity() {
+	double totalCapacity = 0;
+
 	for (auto e = cells.begin(); e != cells.end(); e++) {
-		if ((*e)->getNumber() == cellNumber) {
-			cells.remove((*e));
+		if ((*e)->getIsActive()) {
+			totalCapacity += (*e)->getMaxCapacity();
 		}
 	}
-}
 
-void Module_Battery_Management_System::useAllCells() {
-	const unsigned int maxCells = 8;		//this might not be correct
-	for (unsigned int i = 0; i < maxCells; i++) {
-		Module_Battery_Management_System::addCell(i);
-	}
+	return totalCapacity;
 }
 
 double Module_Battery_Management_System::getBatteryState() {
-	double batteryState = 0;
-	for (auto e = cells.begin(); e != cells.end(); e++) {
-		batteryState += (*e)->getVoltage / (*e)->getMaxVoltage();
-	}
-
-	batteryState /= cells.size();
-
-	return batteryState;
-}
-
-double Module_Battery_Management_System::getCellVoltage(unsigned int cellNumber) {
-	bool found = false;
-	shared_ptr<Cell> foundCell;
-
-	for (auto e = cells.begin(); e != cells.end(); e++) {
-		if ((*e)->getNumber == cellNumber) {
-			if (!found) {
-				foundCell = *e;
-				found = true;
-			}
-			else {
-				//TODO
-				throw new exception();
-			}
-		}
-	}
-
-	return foundCell->getVoltage();
+	return getBatteryCapacityLeft() / getBatteryMaxCapacity();
 }
 
 double Module_Battery_Management_System::getCurrentDraw() {
 	//TODO
 	return 0.0;
-}
+} 

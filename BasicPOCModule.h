@@ -20,10 +20,14 @@ private:
 
 	/// @brief	List of modules
 	static list<BasicPOCModule*> moduleList;
+
+	bool isActive = false;
 protected:
 
 	/// @brief	The controller of this module
 	POCController POCCONTROLLER;
+
+public:
 
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	void BasicPOCModule::activate();
@@ -44,9 +48,6 @@ protected:
 	/// @date	09.01.2020
 
 	void deactivate();
-
-
-public:
 
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	BasicPOCModule::BasicPOCModule(string name, short slaveID);
@@ -88,6 +89,8 @@ public:
 	///
 	/// @author	Benjamin
 	/// @date	16.01.2020
+
+	bool getIsActive();
 
 	virtual const uint16_t getId() = 0;
 

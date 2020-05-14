@@ -18,6 +18,10 @@ void BasicPOCModule::deactivate() {
 	//TODO
 }
 
+bool BasicPOCModule::getIsActive() {
+	return isActive;
+}
+
 void BasicPOCModule::listAllModules() {
 	for (auto e = BasicPOCModule::moduleList.begin(); e != BasicPOCModule::moduleList.end(); e++) {
 		cout << (*e)->getName() << ". " << hex << "0x" << (*e)->getId() << ", I2C: " << (*e)->POCCONTROLLER.getI2CAddress() << "\n";

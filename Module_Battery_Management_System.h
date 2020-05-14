@@ -1,24 +1,63 @@
 #pragma once
-#include "BasicPOCModule.h"
-#include <list>
+#include <vector>
 #include <memory>
+#include "BasicPOCModule.h"
+#include "BQ76952.h"
 
 class Module_Battery_Management_System :
 	public BasicPOCModule {
+private:
+	BQ76952 bq;
+
 public:
 	class Cell {
+	private:
+		bool isActive = true;
+		double maxVoltage = 3.3;	//V
+		double minVoltage = 0;		//V
+		double maxCapacity = 1.8;	//Ah
+		unsigned int number;
 	public:
 		Cell(unsigned int number);
-		Cell(unsigned int number, double maxVoltage);
+
 		unsigned int getNumber();
+
 		double getVoltage();
+
+		void setMaxVoltage(double maxVoltage);
 		double getMaxVoltage();
-	private:
-		double maxVoltage;
-		unsigned int number;
+
+		void setMaxCapacity(double maxCapacity);
+		double getMaxCapacity();
+
+		void setMinVoltage(double minCapacity);
+		double getMinVoltage();
+		
+
+		bool getIsActive();
+		void activate();
+		void deactivate();
 	};
 
-	list<shared_ptr<Cell>> cells;
+	Cell cell1{ 1 };
+	Cell cell2{ 2 };
+	Cell cell3{ 3 };
+	Cell cell4{ 4 };
+	Cell cell5{ 5 };
+	Cell cell6{ 6 };
+	Cell cell7{ 7 };
+	Cell cell8{ 8 };
+
+	vector<shared_ptr<Cell>> cells{
+		make_shared<Cell>(cell1),
+		make_shared<Cell>(cell2),
+		make_shared<Cell>(cell3),
+		make_shared<Cell>(cell4),
+		make_shared<Cell>(cell5),
+		make_shared<Cell>(cell6),
+		make_shared<Cell>(cell7),
+		make_shared<Cell>(cell8)
+	};
 
 	Module_Battery_Management_System();
 	void init() final;
@@ -26,12 +65,9 @@ public:
 	const uint16_t getId() final;
 	const string getClassName() final;
 
-	void addCell(unsigned int cellNUmber);
-	void removeCell(unsigned int cellNumber);
-	void useAllCells();
-
+	double getBatteryCapacityLeft();
+	double getBatteryMaxCapacity();
 	double getBatteryState();
-	double getCellVoltage(unsigned int cellNumber);
 	double getCurrentDraw();
 };
 
