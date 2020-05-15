@@ -2,6 +2,8 @@
 
 list<BasicPOCModule*> BasicPOCModule::moduleList;
 
+mutex BasicPOCModule::pocMutex;
+
 BasicPOCModule::BasicPOCModule(string name, short slaveID) : Device(name + " " + to_string(moduleList.size())), POCCONTROLLER(name + " Controller", slaveID) {
 	BasicPOCModule::moduleList.push_back(this);
 }
@@ -12,10 +14,12 @@ void BasicPOCModule::fixAddressConflicts() {
 
 void BasicPOCModule::activate() {
 	//TODO
+	BasicPOCModule::pocMutex.lock();
 }
 
 void BasicPOCModule::deactivate() {
 	//TODO
+	BasicPOCModule::pocMutex.unlock();
 }
 
 bool BasicPOCModule::getIsActive() {

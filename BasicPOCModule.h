@@ -1,8 +1,8 @@
 #pragma once
 #include "Device.h"
 #include "POCController.h"
+#include <mutex>
 #include <list>
-#include <memory>
 
 using namespace std;
 
@@ -22,6 +22,8 @@ private:
 	static list<BasicPOCModule*> moduleList;
 
 	bool isActive = false;
+	static mutex pocMutex;
+	
 protected:
 
 	/// @brief	The controller of this module
