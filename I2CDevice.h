@@ -3,6 +3,13 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <linux/i2c-dev.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 
 using namespace std;
 
@@ -26,7 +33,7 @@ private:
 protected:
 
 	/// @brief	The I2C slave id of this device
-	short slaveID;
+	short i2cAddress;
 public:
 
 	///-------------------------------------------------------------------------------------------------

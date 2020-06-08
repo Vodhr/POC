@@ -1,7 +1,7 @@
 #include "Module_Battery_Management_System.h"
 
 Module_Battery_Management_System::Module_Battery_Management_System() 
-	: BasicPOCModule(getClassName(), 0x42), bq(this){
+	: BasicPOCModule(getClassName(), 0x42), bq(this, componentList){
 
 }
 

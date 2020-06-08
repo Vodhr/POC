@@ -1,6 +1,6 @@
 #include "BQ76952.h"
 
-BQ76952::BQ76952(BasicPOCModule* itsPOCModule) : I2CDevice("BQ76952", 0x42, false, 100000), POCModuleComponent(itsPOCModule) {
+BQ76952::BQ76952(BasicPOCModule* itsPOCModule, list<POCModuleComponent*>& componentList) : I2CDevice("BQ76952", 0x42, false, 100000), POCModuleComponent(itsPOCModule, componentList) {
 	//TODO
 }
 

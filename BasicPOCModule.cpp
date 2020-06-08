@@ -15,10 +15,16 @@ void BasicPOCModule::fixAddressConflicts() {
 void BasicPOCModule::activate() {
 	//TODO
 	BasicPOCModule::pocMutex.lock();
+
+	POCCONTROLLER.transfere(nullptr, nullptr, 0, 0);
 }
 
 void BasicPOCModule::deactivate() {
 	//TODO
+	char buf[]{ 0xFF };
+
+	POCCONTROLLER.transfere(buf, buf, 1, 0);
+
 	BasicPOCModule::pocMutex.unlock();
 }
 

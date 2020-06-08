@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <list>
 #include "I2CDevice.h"
 #include "TimedState.h"
 #include "POCModuleComponent.h"
@@ -14,7 +15,7 @@ class BQ76952 :
 
 	TimedState<Status5> status5;
 public:
-	BQ76952(BasicPOCModule* itsPOCModule);
+	BQ76952(BasicPOCModule* itsPOCModule, list<POCModuleComponent*>& componentlist);
 
 	void init() final;
 	void selfTest() final;

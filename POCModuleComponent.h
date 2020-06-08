@@ -1,4 +1,5 @@
 #pragma once
+#include <list>
 
 class BasicPOCModule;
 
@@ -10,5 +11,6 @@ protected:
 
 private:
 public:
-	POCModuleComponent(BasicPOCModule* itsPOCModule);
+	POCModuleComponent(BasicPOCModule* itsPOCModule, list<POCModuleComponent*>& componentList);
+	virtual ~POCModuleComponent();
 };
