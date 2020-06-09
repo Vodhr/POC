@@ -20,11 +20,11 @@ public:
 
 	unsigned char readRegister(unsigned char reg);
 
-	void readRegister(unsigned char reg, unsigned char readBuffer[]);
+	void readRegister(unsigned char reg, unsigned char readBuffer[], unsigned int n);
 
 	void writeRegister(unsigned char reg, unsigned char data);
 
-	void writeRegister(unsigned char reg, unsigned char writeBuffer[]);
+	void writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n);
 
 	virtual ~BasicPOCModuleI2CComponent();
 };

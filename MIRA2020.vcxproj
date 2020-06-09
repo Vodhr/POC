@@ -76,6 +76,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="BasicPOCModule.cpp" />
+    <ClCompile Include="BMI055.cpp" />
     <ClCompile Include="BQ76952.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="I2CDevice.cpp" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicPOCModule.h" />
+    <ClInclude Include="BMI055.h" />
     <ClInclude Include="BQ76952.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="I2CDevice.h" />

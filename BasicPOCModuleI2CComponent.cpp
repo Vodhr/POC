@@ -25,12 +25,14 @@ unsigned char BasicPOCModuleI2CComponent::readRegister(unsigned char reg) {
 	unsigned char writeBuffer[1]{ reg };
 
 	transfere(writeBuffer, readBuffer, 1, 1);
+
+	return readBuffer[0];
 }
 
-void BasicPOCModuleI2CComponent::readRegister(unsigned char reg, unsigned char readBuffer[]) {
+void BasicPOCModuleI2CComponent::readRegister(unsigned char reg, unsigned char readBuffer[], unsigned int n) {
 	unsigned char writeBuffer[1]{ reg };
 
-	transfere(writeBuffer, readBuffer, 1, sizeof(readBuffer));
+	transfere(writeBuffer, readBuffer, 1, n);
 }
 
 void BasicPOCModuleI2CComponent::writeRegister(unsigned char reg, unsigned char data) {
@@ -40,12 +42,14 @@ void BasicPOCModuleI2CComponent::writeRegister(unsigned char reg, unsigned char 
 	transfere(writeBuffer, readBuffer, 1, 1);
 }
 
-void BasicPOCModuleI2CComponent::writeRegister(unsigned char reg, unsigned char writeBuffer[]) {
-	unsigned char writeBufferComplete[1 + sizeof(writeBuffer)]{ reg };
+void BasicPOCModuleI2CComponent::writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n) {
+	unsigned char writeBufferComplete[1 + n];
 
-	for (int i = 1; i < sizeof(writeBufferComplete); i++) {
+	writeBufferComplete[0] = reg;
+
+	for (unsigned int i = 1; i <= n; i++) {
 		writeBufferComplete[i] = writeBuffer[i - 1];
 	}
 
-	transfere(writeBuffer, nullptr, sizeof(writeBufferComplete), 0);
+	transfere(writeBufferComplete, nullptr, n + 1, 0);
 }

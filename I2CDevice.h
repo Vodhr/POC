@@ -68,11 +68,11 @@ public:
 
 	virtual unsigned char readRegister(unsigned char reg);
 
-	virtual void readRegister(unsigned char reg, unsigned char readBuffer[]);
+	virtual void readRegister(unsigned char reg, unsigned char readBuffer[], unsigned int n);
 
 	virtual void writeRegister(unsigned char reg, unsigned char data);
 
-	virtual void writeRegister(unsigned char reg, unsigned char writeBuffer[]);
+	virtual void writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n);
 
 	short getI2CAddress();
 };

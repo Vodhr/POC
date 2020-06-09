@@ -49,12 +49,14 @@ unsigned char I2CDevice::readRegister(unsigned char reg) {
 	unsigned char writeBuffer[1]{ reg };
 
 	transfere(writeBuffer, readBuffer, 1, 1);
+
+	return readBuffer[0];
 }
 
-void I2CDevice::readRegister(unsigned char reg, unsigned char readBuffer[]) {
+void I2CDevice::readRegister(unsigned char reg, unsigned char readBuffer[], unsigned int n) {
 	unsigned char writeBuffer[1]{ reg };
 
-	transfere(writeBuffer, readBuffer, 1, sizeof(readBuffer));
+	transfere(writeBuffer, readBuffer, 1, n);
 }
 
 void I2CDevice::writeRegister(unsigned char reg, unsigned char data) {
@@ -64,14 +66,16 @@ void I2CDevice::writeRegister(unsigned char reg, unsigned char data) {
 	transfere(writeBuffer, readBuffer, 1, 1);
 }
 
-void I2CDevice::writeRegister(unsigned char reg, unsigned char writeBuffer[]) {
-	char writeBufferComplete[1 + sizeof(writeBuffer)]{ reg };
+void I2CDevice::writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n) {
+	unsigned char writeBufferComplete[1 + n];
 
-	for (int i = 1; i < sizeof(writeBufferComplete); i++) {
+	writeBufferComplete[0] = reg;
+
+	for (unsigned int i = 1; i <= n; i++) {
 		writeBufferComplete[i] = writeBuffer[i - 1];
 	}
 
-	transfere(writeBuffer, nullptr, sizeof(writeBufferComplete), 0);
+	transfere(writeBufferComplete, nullptr, n + 1, 0);
 }
 
 
