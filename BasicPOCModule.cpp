@@ -21,7 +21,7 @@ void BasicPOCModule::activate() {
 
 void BasicPOCModule::deactivate() {
 	//TODO
-	char buf[]{ 0xFF };
+	unsigned char buf[]{ 0xFF };
 
 	POCCONTROLLER.transfere(buf, buf, 1, 0);
 

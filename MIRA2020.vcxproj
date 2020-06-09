@@ -84,7 +84,7 @@
     <ClCompile Include="Module_Battery_Management_System.cpp" />
     <ClCompile Include="PAC1720.cpp" />
     <ClCompile Include="POCController.cpp" />
-    <ClCompile Include="POCModuleComponent.cpp" />
+    <ClCompile Include="BasicPOCModuleI2CComponent.cpp" />
     <ClCompile Include="SPIDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +96,7 @@
     <ClInclude Include="Module_Battery_Management_System.h" />
     <ClInclude Include="PAC1720.h" />
     <ClInclude Include="POCController.h" />
-    <ClInclude Include="POCModuleComponent.h" />
+    <ClInclude Include="BasicPOCModuleI2CComponent.h" />
     <ClInclude Include="SPIDevice.h" />
     <ClInclude Include="TimedState.h" />
   </ItemGroup>

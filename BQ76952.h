@@ -3,7 +3,7 @@
 #include <list>
 #include "I2CDevice.h"
 #include "TimedState.h"
-#include "POCModuleComponent.h"
+#include "BasicPOCModuleI2CComponent.h"
 
 struct Status5 {
 	//TODO
@@ -11,11 +11,11 @@ struct Status5 {
 };
 
 class BQ76952 :
-	public I2CDevice, POCModuleComponent {
+	public BasicPOCModuleI2CComponent {
 
 	TimedState<Status5> status5;
 public:
-	BQ76952(BasicPOCModule* itsPOCModule, list<POCModuleComponent*>& componentlist);
+	BQ76952(BasicPOCModule* itsPOCModule, list<BasicPOCModuleI2CComponent*>& componentlist);
 
 	void init() final;
 	void selfTest() final;

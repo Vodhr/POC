@@ -64,7 +64,15 @@ public:
 	/// @param 		   	ntx	The number of bytes to be transmitted.
 	/// @param 		   	nrx	The number of bytes to be received.
 
-	void transfere(char* tx, char* rx, int ntx, int nrx);
+	virtual void transfere(unsigned char* tx, unsigned char* rx,unsigned int ntx, unsigned int nrx);
+
+	virtual unsigned char readRegister(unsigned char reg);
+
+	virtual void readRegister(unsigned char reg, unsigned char readBuffer[]);
+
+	virtual void writeRegister(unsigned char reg, unsigned char data);
+
+	virtual void writeRegister(unsigned char reg, unsigned char writeBuffer[]);
 
 	short getI2CAddress();
 };

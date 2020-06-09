@@ -1,7 +1,7 @@
 #pragma once
 #include "Device.h"
 #include "POCController.h"
-#include "POCModuleComponent.h"
+#include "BasicPOCModuleI2CComponent.h"
 #include <mutex>
 #include <list>
 
@@ -29,7 +29,7 @@ protected:
 
 	/// @brief	The controller of this module
 	POCController POCCONTROLLER;
-	list<POCModuleComponent*> componentList;
+	list<BasicPOCModuleI2CComponent*> componentList;
 
 public:
 

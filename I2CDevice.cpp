@@ -10,7 +10,7 @@ I2CDevice::I2CDevice(string name, short slaveID, bool supports10BitAddressing, l
 
 }
 
-void I2CDevice::transfere(char* tx, char* rx, int ntx, int nrx) {
+void I2CDevice::transfere(unsigned char* tx, unsigned char* rx, unsigned int ntx, unsigned int nrx) {
 	//TODO
 	int file;
 
@@ -43,6 +43,38 @@ void I2CDevice::transfere(char* tx, char* rx, int ntx, int nrx) {
 
 	usleep(1000);
 }
+
+unsigned char I2CDevice::readRegister(unsigned char reg) {
+	unsigned char readBuffer[1];
+	unsigned char writeBuffer[1]{ reg };
+
+	transfere(writeBuffer, readBuffer, 1, 1);
+}
+
+void I2CDevice::readRegister(unsigned char reg, unsigned char readBuffer[]) {
+	unsigned char writeBuffer[1]{ reg };
+
+	transfere(writeBuffer, readBuffer, 1, sizeof(readBuffer));
+}
+
+void I2CDevice::writeRegister(unsigned char reg, unsigned char data) {
+	unsigned char readBuffer[1]{ data };
+	unsigned char writeBuffer[1]{ reg };
+
+	transfere(writeBuffer, readBuffer, 1, 1);
+}
+
+void I2CDevice::writeRegister(unsigned char reg, unsigned char writeBuffer[]) {
+	char writeBufferComplete[1 + sizeof(writeBuffer)]{ reg };
+
+	for (int i = 1; i < sizeof(writeBufferComplete); i++) {
+		writeBufferComplete[i] = writeBuffer[i - 1];
+	}
+
+	transfere(writeBuffer, nullptr, sizeof(writeBufferComplete), 0);
+}
+
+
 
 short I2CDevice::getI2CAddress() {
 	return i2cAddress;
