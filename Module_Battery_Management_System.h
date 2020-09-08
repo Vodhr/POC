@@ -62,8 +62,8 @@ public:
 	Module_Battery_Management_System();
 	void init() final;
 	void selfTest() final;
-	const uint16_t getId() final;
-	const string getClassName() final;
+	const uint16_t getId() const final;
+	const string getClassName() const final;
 
 	double getBatteryCapacityLeft();
 	double getBatteryMaxCapacity();

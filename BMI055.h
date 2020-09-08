@@ -1,13 +1,39 @@
 #pragma once
-#include "BasicPOCModuleI2CComponent.h"
+#include "I2CComponent.h"
+#include <queue>
+#include "Vector3d.h"
 
-class BMI055 :
-	public BasicPOCModuleI2CComponent
+using namespace std;
+
+class BMI055IMU :
+	public I2CComponent
 {
+private:
+	unsigned int bandwidth_hz;
+	queue<unsigned char> avgBufferHealth;
 public:
-	BMI055(BasicPOCModule* pocModule, list<BasicPOCModuleI2CComponent*>& componentList);
+	BMI055IMU(BasicPOCModule* pocModule, list<Component*>& componentList, unsigned int bandwidth_hz = 400);
 	void init();
 	void selfTest();
-	unsigned char getAccelerationData(int accelerationX[32], int accelerationY[32], int accelerationZ[32]);
+	void getAccelerationData(queue<int>& accelerationX, queue<int>& accelerationY, queue<int>& accelerationZ);
+	char getTemperature();
+	float getAvgBufferHealth() const;
+	unsigned int getBandwidth_hz() const;
+};
+
+class BMI055Gyro :
+	public I2CComponent {
+private:
+	unsigned int bandwidth_hz;
+	queue<unsigned char> avgBufferHealth;
+	Vector3d<double> rotationRateOffset_s;
+public:
+	BMI055Gyro(BasicPOCModule* pocModule, list<Component*>& moduleList, unsigned int bandwidth_hz = 400);
+	void init();
+	void selfTest();
+	void getRotationRateData(queue<Vector3d<double>>& q);
+	float getAvgBufferHealth() const;
+	Vector3d<double> getRotationOffset() const;
+	unsigned int getBandwidth_hz() const;
 };
 

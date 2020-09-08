@@ -1,9 +1,8 @@
 #pragma once
 #include <memory>
 #include <list>
-#include "I2CDevice.h"
 #include "TimedState.h"
-#include "BasicPOCModuleI2CComponent.h"
+#include "I2CComponent.h"
 
 struct Status5 {
 	//TODO
@@ -11,11 +10,11 @@ struct Status5 {
 };
 
 class BQ76952 :
-	public BasicPOCModuleI2CComponent {
+	public I2CComponent {
 
 	TimedState<Status5> status5;
 public:
-	BQ76952(BasicPOCModule* itsPOCModule, list<BasicPOCModuleI2CComponent*>& componentlist);
+	BQ76952(BasicPOCModule* itsPOCModule, list<Component*>& componentlist);
 
 	void init() final;
 	void selfTest() final;

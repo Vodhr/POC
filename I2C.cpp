@@ -1,22 +1,21 @@
-#include "I2CDevice.h"
+#include "I2C.h"
 
-vector<I2CDevice> I2CDeviceList;
+vector<I2C> I2CDeviceList;
 
-I2CDevice::I2CDevice(string name, short slaveID, bool supports10BitAddressing, long fmax) : 
-	Device::Device(name), 
+I2C::I2C(short slaveID, bool supports10BitAddressing, long fmax) : 
 	fmax(fmax),
 	supports10BitAddressing(supports10BitAddressing),
 	i2cAddress(slaveID) {
 
 }
 
-void I2CDevice::transfere(unsigned char* tx, unsigned char* rx, unsigned int ntx, unsigned int nrx) {
+void I2C::transfere(unsigned char* tx, unsigned char* rx, int ntx, int nrx) {
 	//TODO
 	int file;
 
 
 	///dev/i2c-0 for OPI
-	file = open("/dev/i2c-1", O_RDWR);
+	file = open("/dev/i2c-0", O_RDWR);
 	if (file < 0) {
 		/* ERROR HANDLING; you can check errno to see what went wrong */
 		cout << "could not open I2C file" << endl;
@@ -31,20 +30,30 @@ void I2CDevice::transfere(unsigned char* tx, unsigned char* rx, unsigned int ntx
 		/* ERROR HANDLING: I2C transaction failed */
 		cout << "i2c send failed" << endl;
 	}
+
+	//usleep(100);
 	
+	//cout << "reading " << (int)nrx << " bytes from I2C" << endl;
 
 	if (nrx > 0) {
-		if (read(file, rx, nrx) != ntx) {
+		if (read(file, rx, nrx) != nrx) {
 			cout << "i2c receive failed" << endl;
 		}
 	}
 
 	close(file);
 
-	usleep(1000);
+	//usleep(10000);
 }
 
-unsigned char I2CDevice::readRegister(unsigned char reg) {
+void I2C::write(unsigned char data) {
+	unsigned char readBuffer[0];
+	unsigned char writeBuffer[1]{ data };
+
+	transfere(writeBuffer, readBuffer, 1, 0);
+}
+
+unsigned char I2C::readRegister(unsigned char reg) {
 	unsigned char readBuffer[1];
 	unsigned char writeBuffer[1]{ reg };
 
@@ -53,20 +62,20 @@ unsigned char I2CDevice::readRegister(unsigned char reg) {
 	return readBuffer[0];
 }
 
-void I2CDevice::readRegister(unsigned char reg, unsigned char readBuffer[], unsigned int n) {
+void I2C::readRegister(unsigned char reg, unsigned char readBuffer[], unsigned int n) {
 	unsigned char writeBuffer[1]{ reg };
 
 	transfere(writeBuffer, readBuffer, 1, n);
 }
 
-void I2CDevice::writeRegister(unsigned char reg, unsigned char data) {
-	unsigned char readBuffer[1]{ data };
-	unsigned char writeBuffer[1]{ reg };
+void I2C::writeRegister(unsigned char reg, unsigned char data) {
+	unsigned char readBuffer[0];
+	unsigned char writeBuffer[2]{ reg , data};
 
-	transfere(writeBuffer, readBuffer, 1, 1);
+	transfere(writeBuffer, readBuffer, 2, 0);
 }
 
-void I2CDevice::writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n) {
+void I2C::writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n) {
 	unsigned char writeBufferComplete[1 + n];
 
 	writeBufferComplete[0] = reg;
@@ -80,6 +89,6 @@ void I2CDevice::writeRegister(unsigned char reg, unsigned char writeBuffer[], un
 
 
 
-short I2CDevice::getI2CAddress() {
+short I2C::getI2CAddress() {
 	return i2cAddress;
 }

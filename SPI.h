@@ -1,19 +1,25 @@
 #pragma once
 #include "Device.h"
 #include <string>
+#include <linux/spi/spidev.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 
 using namespace std;
 
 ///-------------------------------------------------------------------------------------------------
-/// @class	SPIDevice
+/// @class	SPI
 ///
 /// @brief	A SPI (Serial Peripheral Interface) device
 ///
 /// @author	Benjamin
-/// @date	09.01.2020
+/// @date	08.09.2020
 
-class SPIDevice :
-	public Device
+class SPI
 {
 private:
 
@@ -40,7 +46,7 @@ public:
 	/// @param 	cpol	The SPI clock polarity mode of this device.
 	/// @param 	fmax	The maximum frequency at which this device can operate with.
 
-	SPIDevice(string name, bool cpha, bool cpol, long fmax);
+	SPI(bool cpha, bool cpol, long fmax);
 
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	void SPIDevice::transfere(char* buffer, int n);
@@ -53,6 +59,14 @@ public:
 	/// @param [in,out]	buffer	If non-null, bytes from buffer are transmitted and overwritten by recieved bytes from this device
 	/// @param 		   	n	  	The number of bytes to be transmitted/received 
 
-	void transfere(char* buffer, int n);
+	virtual void transfere(char* buffer, int n);
+
+	virtual unsigned char readRegister(unsigned char reg);
+
+	virtual void readRegister(unsigned char reg, unsigned char readBuffer[], unsigned int n);
+
+	virtual void writeRegister(unsigned char reg, unsigned char data);
+
+	virtual void writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n);
 };
 

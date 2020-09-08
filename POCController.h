@@ -1,7 +1,8 @@
 #pragma once
-#include "I2CDevice.h"
+#include "ATtiny814.h"
 #include <string>
 #include <iostream>
+#include <list>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ using namespace std;
 /// @author	Benjamin
 /// @date	09.01.2020
 
-class POCController : public I2CDevice {
+class POCController : public ATtiny814 {
 public:
 
 	///-------------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@ public:
 	/// @param 	name   	The name of this controller.
 	/// @param 	slaveid	The I2C slave id of this controller.
 
-	POCController(string name, short slaveid);
+	POCController(string name, short slaveID, BasicPOCModule* itsPOCModule, list<Component*>& componentList);
 
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	void POCController::init() final;
@@ -48,5 +49,19 @@ public:
 	/// @date	09.01.2020
 
 	void selfTest() final;
+
+	void activateSPISlot(unsigned char slotNr);
+
+	void deactivateSPISlot(unsigned char slotNr);
+
+	double getBoardTemperature();
+
+	double setBoardTargetTemperature();
+
+	void activateBoardHeater();
+
+	void deactivateBoardHeater();
+
+
 };
 

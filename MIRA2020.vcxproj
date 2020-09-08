@@ -75,34 +75,68 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="ATtiny814.cpp" />
     <ClCompile Include="BasicPOCModule.cpp" />
+    <ClCompile Include="BasicPOCModuleStatusEntry.cpp" />
     <ClCompile Include="BMI055.cpp" />
     <ClCompile Include="BQ76952.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Device.cpp" />
-    <ClCompile Include="I2CDevice.cpp" />
+    <ClCompile Include="I2C.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Module_Base_RPI3B.cpp" />
-    <ClCompile Include="Module_Battery_Management_System.cpp" />
+    <ClCompile Include="Module_Temperature_Measurement.cpp" />
     <ClCompile Include="PAC1720.cpp" />
     <ClCompile Include="POCController.cpp" />
-    <ClCompile Include="BasicPOCModuleI2CComponent.cpp" />
-    <ClCompile Include="SPIDevice.cpp" />
+    <ClCompile Include="I2CComponent.cpp" />
+    <ClCompile Include="SPIComponent.cpp" />
+    <ClCompile Include="SPI.cpp" />
+    <ClCompile Include="TemperatureSensor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ATtiny814.h" />
     <ClInclude Include="BasicPOCModule.h" />
+    <ClInclude Include="BasicPOCModuleStatusEntry.h" />
     <ClInclude Include="BMI055.h" />
     <ClInclude Include="BQ76952.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="CoordinateSystem3D.h" />
     <ClInclude Include="Device.h" />
-    <ClInclude Include="I2CDevice.h" />
+    <ClInclude Include="I2C.h" />
     <ClInclude Include="Module_Base_RPI3B.h" />
-    <ClInclude Include="Module_Battery_Management_System.h" />
+    <ClInclude Include="Module_Temperature_Measurement.h" />
     <ClInclude Include="PAC1720.h" />
     <ClInclude Include="POCController.h" />
-    <ClInclude Include="BasicPOCModuleI2CComponent.h" />
-    <ClInclude Include="SPIDevice.h" />
+    <ClInclude Include="I2CComponent.h" />
+    <ClInclude Include="SPIComponent.h" />
+    <ClInclude Include="SPI.h" />
+    <ClInclude Include="RepeatedTask.h" />
+    <ClInclude Include="TemperatureSensor.h" />
     <ClInclude Include="TimedState.h" />
+    <ClInclude Include="Vector3d.h" />
   </ItemGroup>
-  <ItemDefinitionGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <LibraryDependencies>pthread</LibraryDependencies>
+    </Link>
+    <ClCompile>
+      <CLanguageStandard>gnu99</CLanguageStandard>
+    </ClCompile>
+    <ClCompile>
+      <CppLanguageStandard>c++17</CppLanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Link>
+      <LibraryDependencies>pthread</LibraryDependencies>
+    </Link>
+    <ClCompile>
+      <CLanguageStandard>Default</CLanguageStandard>
+    </ClCompile>
+    <ClCompile>
+      <CppLanguageStandard>c++17</CppLanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

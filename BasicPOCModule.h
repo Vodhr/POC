@@ -1,8 +1,9 @@
 #pragma once
 #include "Device.h"
 #include "POCController.h"
-#include "BasicPOCModuleI2CComponent.h"
-#include <mutex>
+#include "Component.h"
+#include "SPIComponent.h"
+#include <shared_mutex>
 #include <list>
 
 using namespace std;
@@ -22,14 +23,39 @@ private:
 	/// @brief	List of modules
 	static list<BasicPOCModule*> moduleList;
 
+
+	/// @brief	True if is module is active, false if not
 	bool isActive = false;
-	static mutex pocMutex;
-	
+
+	/// @brief	The mutex that guards the module de-/activation, only one board may be active at a time
+	static mutex pocMutex;		
+
+	/// @brief	The currently active module
+	BasicPOCModule* activeModule = nullptr;
+
+	/// @brief	The mutex that guards the module SPI component de-/activation, only one SPI component may be active on a board at a time
+	mutex spiMutex;
+
+	/// @brief	The currently active SPI component
+	SPIComponent* activeSPIComponent = nullptr;
+
+	///-------------------------------------------------------------------------------------------------
+	/// @fn	void BasicPOCModule::deactivate();
+	///
+	/// @brief	Deactivates this module
+	///
+	/// @author	Benjamin
+	/// @date	05.09.2020
+
+	void deactivate();
+
 protected:
 
-	/// @brief	The controller of this module
-	POCController POCCONTROLLER;
-	list<BasicPOCModuleI2CComponent*> componentList;
+	/// @brief	The a reference to this module's controller, used by the module for de-/activation
+	POCController* pocControllerRef;
+
+	/// @brief	List of I2C/SPI components located on this board
+	list<Component*> componentList;
 
 public:
 
@@ -51,7 +77,7 @@ public:
 	/// @author	Benjamin
 	/// @date	09.01.2020
 
-	void deactivate();
+	void canBeDeactivated();
 
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	BasicPOCModule::BasicPOCModule(string name, short slaveID);
@@ -64,7 +90,7 @@ public:
 	/// @param 	name   	The name of this module.
 	/// @param 	slaveID	default I2C Slave-Id for the controller of this module
 
-	BasicPOCModule(string name, short slaveID);
+	BasicPOCModule(string name, POCController* pocControllerRef);
 
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	static void BasicPOCModule::fixAddressConflicts();
@@ -75,6 +101,30 @@ public:
 	/// @date	09.01.2020
 
 	static void fixAddressConflicts();
+
+	///-------------------------------------------------------------------------------------------------
+	/// @fn	void BasicPOCModule::activate(const SPIComponent& component);
+	///
+	/// @brief	Activates the given component
+	///
+	/// @author	Benjamin
+	/// @date	05.09.2020
+	///
+	/// @param 	component	The component.
+
+	void activate(SPIComponent& component);
+
+	///-------------------------------------------------------------------------------------------------
+	/// @fn	void BasicPOCModule::canBeDeactivated(const SPIComponent& component);
+	///
+	/// @brief	Declares the component ready for deactivation
+	///
+	/// @author	Benjamin
+	/// @date	05.09.2020
+	///
+	/// @param 	component	The component.
+
+	void canBeDeactivated(SPIComponent& component);
 
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	static void BasicPOCModule::listAllModules();
@@ -94,11 +144,11 @@ public:
 	/// @author	Benjamin
 	/// @date	16.01.2020
 
-	bool getIsActive();
+	bool getIsActive() const;
 
-	virtual const uint16_t getId() = 0;
+	virtual const uint16_t getId() const = 0;
 
-	virtual const string getClassName() = 0;
+	virtual const string getClassName() const = 0;
 
 	virtual ~BasicPOCModule();
 };

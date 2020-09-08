@@ -1,6 +1,7 @@
 #include "PAC1720.h"
 
-PAC1720::PAC1720(BasicPOCModule* itsPOCModule, list<BasicPOCModuleI2CComponent*>& componentList) : BasicPOCModuleI2CComponent("PAC1720", 0x29, false, 100000, itsPOCModule, componentList) {
+PAC1720::PAC1720(BasicPOCModule* itsPOCModule, list<Component*>& componentList) : 
+	I2CComponent("PAC1720", 0x29, false, 100000, itsPOCModule, componentList) {
 
 }
 
@@ -13,6 +14,7 @@ void PAC1720::selfTest() {
 }
 
 unsigned int PAC1720::getCurrentDrawHS() {
+	//TODO
 	return ((readRegister(0x0D) & (0xEF)) << 4) | (readRegister(0x0E) >> 4);
 }
 

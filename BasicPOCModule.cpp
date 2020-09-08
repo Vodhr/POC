@@ -4,7 +4,7 @@ list<BasicPOCModule*> BasicPOCModule::moduleList;
 
 mutex BasicPOCModule::pocMutex;
 
-BasicPOCModule::BasicPOCModule(string name, short slaveID) : Device(name + " " + to_string(moduleList.size())), POCCONTROLLER(name + " Controller", slaveID) {
+BasicPOCModule::BasicPOCModule(string name, POCController* pocControllerRef) : Device(name + " " + to_string(moduleList.size())), pocControllerRef(pocControllerRef) {
 	BasicPOCModule::moduleList.push_back(this);
 }
 
@@ -14,27 +14,62 @@ void BasicPOCModule::fixAddressConflicts() {
 
 void BasicPOCModule::activate() {
 	//TODO
-	BasicPOCModule::pocMutex.lock();
+	
 
-	POCCONTROLLER.transfere(nullptr, nullptr, 0, 0);
+	if (!isActive) {
+		BasicPOCModule::pocMutex.lock();
+		//TODO
+		/*
+		if (lastUsedModule != nullptr && lastUsedModule != this) {
+			lastUsedModule->deactivate();
+		}
+
+		lastUsedModule = this;
+		*/
+		pocControllerRef->transfere(nullptr, nullptr, 0, 0);
+
+		isActive = true;
+	}
 }
 
 void BasicPOCModule::deactivate() {
+	pocMutex.lock();	//Make sure module is not used
+
+	unsigned char writeBuffer[1]{ 0xFF };
+
+	pocControllerRef->transfere(writeBuffer, writeBuffer, 1, 0);
+
+	isActive = false;
+
+	pocMutex.unlock();
+}
+
+void BasicPOCModule::canBeDeactivated() {
 	//TODO
-	unsigned char buf[]{ 0xFF };
-
-	POCCONTROLLER.transfere(buf, buf, 1, 0);
-
 	BasicPOCModule::pocMutex.unlock();
 }
 
-bool BasicPOCModule::getIsActive() {
+void BasicPOCModule::activate(SPIComponent& component) {
+	spiMutex.lock();
+
+	if (activeSPIComponent != &component) {
+		activeSPIComponent = &component;
+		pocControllerRef->activateSPISlot(component.slotNr);
+	}
+	
+}
+
+void BasicPOCModule::canBeDeactivated(SPIComponent& component) {
+	spiMutex.unlock();
+}
+
+bool BasicPOCModule::getIsActive() const {
 	return isActive;
 }
 
 void BasicPOCModule::listAllModules() {
 	for (auto e = BasicPOCModule::moduleList.begin(); e != BasicPOCModule::moduleList.end(); e++) {
-		cout << (*e)->getName() << ". " << hex << "0x" << (*e)->getId() << ", I2C: " << (*e)->POCCONTROLLER.getI2CAddress() << "\n";
+		cout << (*e)->getName() << ". " << hex << "0x" << (*e)->getId() << ", I2C: " << (*e)->pocControllerRef->getI2CAddress() << "\n";
 	}
 }
 

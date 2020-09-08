@@ -1,3 +1,41 @@
 ﻿  Quellen werden überprüft.
   Quellen werden remote nach "192.168.138.129" kopiert.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Application Type\Linux\1.0\Linux.targets(223,5): error : Mit dem Remotesystem konnte keine Verbindung hergestellt werden. Überprüfen Sie die Verbindungseinstellungen, und stellen Sie sicher, dass Ihr Computer sich im Netzwerk befindet und erreichbar ist.
+  Die Architektur wird überprüft.
+  Die Architektur wird überprüft.
+  Remotebuild wird gestartet.
+  Quellen werden kompiliert:
+  BasicPOCModule.cpp
+  BasicPOCModuleStatusEntry.cpp
+  BMI055.cpp
+  BQ76952.cpp
+  Component.cpp
+  Device.cpp
+  I2C.cpp
+  main.cpp
+  Module_Base_RPI3B.cpp
+C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.h(32,8): warning : ‘Module_Base_RPI3B::imuTemperature_degC’ will be initialized after [-Wreorder]
+C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.h(32,8): warning :   float imuTemperature_degC;
+C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.h(32,8): warning :         ^~~~~~~~~~~~~~~~~~~
+C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.h(18,13): warning : ‘BMI055Gyro Module_Base_RPI3B::gyro’ [-Wreorder]
+C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.h(18,13): warning :   BMI055Gyro gyro;
+C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.h(18,13): warning :              ^~~~
+C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.cpp(3,1): warning : when initialized here [-Wreorder]
+  Module_Battery_Management_System.cpp
+  Module_Stepper_Control_Low_Current.cpp
+  PAC1720.cpp
+  POCController.cpp
+  I2CComponent.cpp
+C:\Users\Benjamin\Desktop\POC\I2CComponent.cpp(7,76): warning : base ‘Component’ will be initialized after [-Wreorder]
+C:\Users\Benjamin\Desktop\POC\I2CComponent.cpp(7,76): warning :    Component(name, itsPOCModule), I2C(slaveID, supports10BitAddressing, fmax)  {
+C:\Users\Benjamin\Desktop\POC\I2CComponent.cpp(7,76): warning :                                                                             ^
+C:\Users\Benjamin\Desktop\POC\I2CComponent.cpp(7,76): warning : base ‘I2C’ [-Wreorder]
+C:\Users\Benjamin\Desktop\POC\I2CComponent.cpp(4,1): warning : when initialized here [-Wreorder]
+  SPIComponent.cpp
+C:\Users\Benjamin\Desktop\POC\SPIComponent.cpp(5,53): warning : base ‘Component’ will be initialized after [-Wreorder]
+C:\Users\Benjamin\Desktop\POC\SPIComponent.cpp(5,53): warning :   Component(name, itsPOCModule), SPI(cpha, cpol, fmax) {
+C:\Users\Benjamin\Desktop\POC\SPIComponent.cpp(5,53): warning :                                                      ^
+C:\Users\Benjamin\Desktop\POC\SPIComponent.cpp(5,53): warning : base ‘SPI’ [-Wreorder]
+C:\Users\Benjamin\Desktop\POC\SPIComponent.cpp(3,1): warning : when initialized here [-Wreorder]
+  SPI.cpp
+  Objekte werden verknüpft.
+  MIRA2020.vcxproj -> C:\Users\Benjamin\Desktop\POC\bin\x64\Debug\MIRA2020.out

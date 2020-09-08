@@ -13,12 +13,12 @@ void Module_Battery_Management_System::selfTest() {
 	//TODO
 }
 
-const uint16_t Module_Battery_Management_System::getId() {
+const uint16_t Module_Battery_Management_System::getId() const {
 	//See PoC Module Table
 	return 0x020;
 }
 
-const string Module_Battery_Management_System::getClassName() {
+const string Module_Battery_Management_System::getClassName() const {
 	return "Battery Management System";
 }
 
