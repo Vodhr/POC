@@ -5,6 +5,9 @@
 #include "SPIComponent.h"
 #include <shared_mutex>
 #include <list>
+#include <exception>
+#include <memory>
+
 
 using namespace std;
 
@@ -22,7 +25,6 @@ private:
 
 	/// @brief	List of modules
 	static list<BasicPOCModule*> moduleList;
-
 
 	/// @brief	True if is module is active, false if not
 	bool isActive = false;
@@ -52,7 +54,7 @@ private:
 protected:
 
 	/// @brief	The a reference to this module's controller, used by the module for de-/activation
-	POCController* pocControllerRef;
+	shared_ptr<POCController> pocControllerRef;
 
 	/// @brief	List of I2C/SPI components located on this board
 	list<Component*> componentList;
@@ -90,7 +92,7 @@ public:
 	/// @param 	name   	The name of this module.
 	/// @param 	slaveID	default I2C Slave-Id for the controller of this module
 
-	BasicPOCModule(string name, POCController* pocControllerRef);
+	BasicPOCModule(string name, shared_ptr<POCController> pocControllerRef = nullptr);
 
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	static void BasicPOCModule::fixAddressConflicts();
@@ -105,12 +107,15 @@ public:
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	void BasicPOCModule::activate(const SPIComponent& component);
 	///
-	/// @brief	Activates the given component
+	/// @brief	Activates the given SPI component. If another SPI component is still active, 
+	/// 		is waits until the other SPI component calls canBeDeactivated. After that the 
+	/// 		POCController will by itself deactivated the other SPI component befor activating
+	/// 		this SPI Component
 	///
 	/// @author	Benjamin
 	/// @date	05.09.2020
 	///
-	/// @param 	component	The component.
+	/// @param 	component	The SPI component that will be activated
 
 	void activate(SPIComponent& component);
 

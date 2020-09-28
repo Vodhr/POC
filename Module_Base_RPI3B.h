@@ -10,6 +10,8 @@
 #include "TimedState.h"
 #include "CoordinateSystem3D.h"
 
+using namespace std;
+
 ///-------------------------------------------------------------------------------------------------
 /// @class	BaseModuleController
 ///
@@ -37,7 +39,6 @@ public:
 class Module_Base_RPI3B : public BasicPOCModule
 {
 private:
-
 	/// @brief	The controller of this module
 	BaseModuleController pocController;
 
@@ -57,7 +58,10 @@ private:
 	Vector3d<double> velocity_ms;
 	Vector3d<double> location_m;
 
+	/// @brief	The rotation of the module in global coordinate system
 	Vector3d<double> rotation;
+
+	/// @brief	The rotation rate of the module in global coordinate system
 	Vector3d<double> rotationRate_s;
 	Vector3d<double> rotationAcceleration_s2;
 
@@ -65,7 +69,7 @@ private:
 
 	float imuTemperature_degC;
 public:
-
+	
 	Module_Base_RPI3B();
 	void init();
 	void selfTest();

@@ -13,9 +13,11 @@ SPIComponent::SPIComponent(string name, unsigned char slotNumber, bool cpha, boo
 void SPIComponent::transfere(char* buffer, int n) {
 	//TODO
 	
-
+	itsPOCModule->activate(*this);
 
 	SPI::transfere(buffer, n);
+
+	itsPOCModule->canBeDeactivated(*this);
 }
 
 unsigned char SPIComponent::readRegister(unsigned char reg) {

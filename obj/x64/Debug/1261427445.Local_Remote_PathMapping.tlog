@@ -1,6 +1,7 @@
-C:\Users\Benjamin\Desktop\POC\BasicPOCModule.cpp|/home/benjamin/projects/MIRA2020/BasicPOCModule.cpp
+C:\Users\Benjamin\Desktop\POC\ATtiny814.cpp|/home/benjamin/projects/MIRA2020/ATtiny814.cpp
 C:\Users\Benjamin\Desktop\POC|/home/benjamin/projects/MIRA2020
 @C:\Users\Benjamin\Desktop\POC|@/home/benjamin/projects/MIRA2020
+C:\Users\Benjamin\Desktop\POC\BasicPOCModule.cpp|/home/benjamin/projects/MIRA2020/BasicPOCModule.cpp
 C:\Users\Benjamin\Desktop\POC\BasicPOCModuleStatusEntry.cpp|/home/benjamin/projects/MIRA2020/BasicPOCModuleStatusEntry.cpp
 C:\Users\Benjamin\Desktop\POC\BMI055.cpp|/home/benjamin/projects/MIRA2020/BMI055.cpp
 C:\Users\Benjamin\Desktop\POC\BQ76952.cpp|/home/benjamin/projects/MIRA2020/BQ76952.cpp
@@ -9,13 +10,13 @@ C:\Users\Benjamin\Desktop\POC\Device.cpp|/home/benjamin/projects/MIRA2020/Device
 C:\Users\Benjamin\Desktop\POC\I2C.cpp|/home/benjamin/projects/MIRA2020/I2C.cpp
 C:\Users\Benjamin\Desktop\POC\main.cpp|/home/benjamin/projects/MIRA2020/main.cpp
 C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.cpp|/home/benjamin/projects/MIRA2020/Module_Base_RPI3B.cpp
-C:\Users\Benjamin\Desktop\POC\Module_Battery_Management_System.cpp|/home/benjamin/projects/MIRA2020/Module_Battery_Management_System.cpp
-C:\Users\Benjamin\Desktop\POC\Module_Stepper_Control_Low_Current.cpp|/home/benjamin/projects/MIRA2020/Module_Stepper_Control_Low_Current.cpp
+C:\Users\Benjamin\Desktop\POC\Module_Temperature_Measurement.cpp|/home/benjamin/projects/MIRA2020/Module_Temperature_Measurement.cpp
 C:\Users\Benjamin\Desktop\POC\PAC1720.cpp|/home/benjamin/projects/MIRA2020/PAC1720.cpp
 C:\Users\Benjamin\Desktop\POC\POCController.cpp|/home/benjamin/projects/MIRA2020/POCController.cpp
 C:\Users\Benjamin\Desktop\POC\I2CComponent.cpp|/home/benjamin/projects/MIRA2020/I2CComponent.cpp
 C:\Users\Benjamin\Desktop\POC\SPIComponent.cpp|/home/benjamin/projects/MIRA2020/SPIComponent.cpp
 C:\Users\Benjamin\Desktop\POC\SPI.cpp|/home/benjamin/projects/MIRA2020/SPI.cpp
+C:\Users\Benjamin\Desktop\POC\ATtiny814.h|/home/benjamin/projects/MIRA2020/ATtiny814.h
 C:\Users\Benjamin\Desktop\POC\BasicPOCModule.h|/home/benjamin/projects/MIRA2020/BasicPOCModule.h
 C:\Users\Benjamin\Desktop\POC\BasicPOCModuleStatusEntry.h|/home/benjamin/projects/MIRA2020/BasicPOCModuleStatusEntry.h
 C:\Users\Benjamin\Desktop\POC\BMI055.h|/home/benjamin/projects/MIRA2020/BMI055.h
@@ -25,8 +26,7 @@ C:\Users\Benjamin\Desktop\POC\CoordinateSystem3D.h|/home/benjamin/projects/MIRA2
 C:\Users\Benjamin\Desktop\POC\Device.h|/home/benjamin/projects/MIRA2020/Device.h
 C:\Users\Benjamin\Desktop\POC\I2C.h|/home/benjamin/projects/MIRA2020/I2C.h
 C:\Users\Benjamin\Desktop\POC\Module_Base_RPI3B.h|/home/benjamin/projects/MIRA2020/Module_Base_RPI3B.h
-C:\Users\Benjamin\Desktop\POC\Module_Battery_Management_System.h|/home/benjamin/projects/MIRA2020/Module_Battery_Management_System.h
-C:\Users\Benjamin\Desktop\POC\Module_Stepper_Control_Low_Current.h|/home/benjamin/projects/MIRA2020/Module_Stepper_Control_Low_Current.h
+C:\Users\Benjamin\Desktop\POC\Module_Temperature_Measurement.h|/home/benjamin/projects/MIRA2020/Module_Temperature_Measurement.h
 C:\Users\Benjamin\Desktop\POC\PAC1720.h|/home/benjamin/projects/MIRA2020/PAC1720.h
 C:\Users\Benjamin\Desktop\POC\POCController.h|/home/benjamin/projects/MIRA2020/POCController.h
 C:\Users\Benjamin\Desktop\POC\I2CComponent.h|/home/benjamin/projects/MIRA2020/I2CComponent.h

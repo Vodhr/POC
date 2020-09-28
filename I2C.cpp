@@ -26,7 +26,7 @@ void I2C::transfere(unsigned char* tx, unsigned char* rx, int ntx, int nrx) {
 		cout << "could not open I2C file" << endl;
 	}
 
-	if (write(file, tx, ntx) != ntx) {
+	if (::write(file, tx, ntx) != ntx) {
 		/* ERROR HANDLING: I2C transaction failed */
 		cout << "i2c send failed" << endl;
 	}
@@ -36,7 +36,7 @@ void I2C::transfere(unsigned char* tx, unsigned char* rx, int ntx, int nrx) {
 	//cout << "reading " << (int)nrx << " bytes from I2C" << endl;
 
 	if (nrx > 0) {
-		if (read(file, rx, nrx) != nrx) {
+		if (::read(file, rx, nrx) != nrx) {
 			cout << "i2c receive failed" << endl;
 		}
 	}
@@ -51,6 +51,15 @@ void I2C::write(unsigned char data) {
 	unsigned char writeBuffer[1]{ data };
 
 	transfere(writeBuffer, readBuffer, 1, 0);
+}
+
+unsigned char I2C::read() {
+	unsigned char readBuffer[1];
+	unsigned char writeBuffer[0];
+	
+	transfere(writeBuffer, readBuffer, 0, 1);
+
+	return readBuffer[0];
 }
 
 unsigned char I2C::readRegister(unsigned char reg) {

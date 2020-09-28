@@ -1,7 +1,7 @@
 #include "Module_Base_RPI3B.h"
 
 Module_Base_RPI3B::Module_Base_RPI3B() : pocController(0x42, this, componentList),
-	BasicPOCModule(getClassName(), &pocController), 
+	BasicPOCModule(getClassName(), make_shared<POCController>(pocController)), 
 	pac(this, componentList), imu(this, componentList),
 	imuTemperature_degC(23),
 	gyro(this, componentList)
@@ -107,14 +107,13 @@ void Module_Base_RPI3B::updateIMUTemperature() {
 
 void Module_Base_RPI3B::updateGyroData() {
 	queue<Vector3d<double>> rotationRatetemp;
-	Vector3d<double> rotationRateAvg;
+	Vector3d<double> localRotationRate_s;
 	
 	int n = 0;
 
 	const double deltaT_s = 1.0 / gyro.getBandwidth_hz();
 
 	while (true) {
-		rotationRateAvg = { 0, 0, 0 };
 		n = 0;
 
 		gyro.getRotationRateData(rotationRatetemp);
@@ -124,13 +123,19 @@ void Module_Base_RPI3B::updateGyroData() {
 
 		//numerically integrate rate of rotation to get current rotation 
 		while (!rotationRatetemp.empty()) {
-			rotation += (rotationRatetemp.front() - gyro.getRotationOffset()) * deltaT_s;
-			rotationRateAvg += rotationRatetemp.front() - gyro.getRotationOffset();
+			Vector3d<double> eX, eY, eZ;
+			coordinateSystem.getUnitVectors(eX, eY, eZ);
+			
+			localRotationRate_s = rotationRatetemp.front() - gyro.getRotationOffset();
+			rotationRate_s = eX * localRotationRate_s.getX() + eY * localRotationRate_s.getY() + eZ * localRotationRate_s.getZ();
+			rotation += rotationRate_s * deltaT_s;
+			coordinateSystem.rotate(rotationRate_s * deltaT_s);
+
 			rotationRatetemp.pop();
 			n++;
 		}
 
-		rotationRate_s = rotationRateAvg / n;
+		//rotationRate_s = rotationRateAvg / n;
 
 		usleep(100000);
 	}

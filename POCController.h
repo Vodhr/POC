@@ -52,8 +52,6 @@ public:
 
 	void activateSPISlot(unsigned char slotNr);
 
-	void deactivateSPISlot(unsigned char slotNr);
-
 	double getBoardTemperature();
 
 	double setBoardTargetTemperature();

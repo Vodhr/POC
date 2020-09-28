@@ -91,7 +91,6 @@
     <ClCompile Include="I2CComponent.cpp" />
     <ClCompile Include="SPIComponent.cpp" />
     <ClCompile Include="SPI.cpp" />
-    <ClCompile Include="TemperatureSensor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ATtiny814.h" />
@@ -111,7 +110,6 @@
     <ClInclude Include="SPIComponent.h" />
     <ClInclude Include="SPI.h" />
     <ClInclude Include="RepeatedTask.h" />
-    <ClInclude Include="TemperatureSensor.h" />
     <ClInclude Include="TimedState.h" />
     <ClInclude Include="Vector3d.h" />
   </ItemGroup>

@@ -4,7 +4,10 @@ list<BasicPOCModule*> BasicPOCModule::moduleList;
 
 mutex BasicPOCModule::pocMutex;
 
-BasicPOCModule::BasicPOCModule(string name, POCController* pocControllerRef) : Device(name + " " + to_string(moduleList.size())), pocControllerRef(pocControllerRef) {
+BasicPOCModule::BasicPOCModule(string name, shared_ptr<POCController> pocControllerRef) : Device(name + " " + to_string(moduleList.size())), pocControllerRef(pocControllerRef) {
+	if (pocControllerRef == nullptr) {
+		pocControllerRef = make_shared<POCController>("POCController", 0x42, this, componentList);
+	}
 	BasicPOCModule::moduleList.push_back(this);
 }
 

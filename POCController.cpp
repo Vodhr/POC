@@ -5,11 +5,6 @@ POCController::POCController(string name, short i2CAddress, BasicPOCModule* itsP
 
 }
 
-void I2C::write(unsigned char data) {
-	unsigned char readBuffer[0];
-	unsigned char readBuffer[1]{ data };
-}
-
 void POCController::init() {
 	cout << this->getName() << ": Initialising ...\n";
 	//TODO

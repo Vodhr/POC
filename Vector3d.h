@@ -69,7 +69,7 @@ public:
 
 template<class T> 
 Vector3d<T> Vector3d<T>::get() const {
-	mtx.lock_shared();
+	mtx.lock_shared();		//several processes can read at once while no prosess is writing
 
 	Vector3d<T> temp{ x, y, z };
 
@@ -80,7 +80,7 @@ Vector3d<T> Vector3d<T>::get() const {
 
 template<class T>
 void Vector3d<T>::get(T& x, T& y, T& z) const { 
-	mtx.lock_shared();
+	mtx.lock_shared();		//only one process can write at a time
 
 	x = this->x;
 	y = this->y;

@@ -37,8 +37,8 @@ TimedState<T>::TimedState(T state, system_clock::time_point time) : state(state)
 }
 
 template<class T>
-TimedState<T>::TimedState(const TimedState<T>& timedState) : time(timedState.getTime()), state(timedState.get()) {
-	temp.set(timedState.get());
+TimedState<T>::TimedState(const TimedState<T>& timedState) : time(timedState.getTime()), state(timedState.getState()) {
+
 }
 
 template<class T>
