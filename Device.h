@@ -1,3 +1,8 @@
+///-------------------------------------------------------------------------------------------------
+/// @file	POC\Device.h.
+///
+/// @brief	Declares the device class
+
 #pragma once
 #include <list>
 #include <string>

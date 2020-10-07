@@ -90,7 +90,7 @@
 											"top": 343,
 											"width": 157.85986328125,
 											"height": 13,
-											"text": "IPOCModule"
+											"text": "BasicPOCModule"
 										},
 										{
 											"_type": "LabelView",
@@ -303,7 +303,7 @@
 											"top": 183,
 											"width": 248.19970703125,
 											"height": 13,
-											"text": "I2CDevice",
+											"text": "I2C",
 											"wordWrap": true
 										},
 										{
@@ -1028,7 +1028,7 @@
 											"top": 191,
 											"width": 199,
 											"height": 13,
-											"text": "SPIDevice"
+											"text": "SPI"
 										},
 										{
 											"_type": "LabelView",
@@ -3806,7 +3806,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "IPOCModule",
+					"name": "BasicPOCModule",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
@@ -3871,7 +3871,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "I2CDevice",
+					"name": "I2C",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
@@ -4469,7 +4469,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "SPIDevice",
+					"name": "SPI",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",

@@ -1,9 +1,34 @@
+///-------------------------------------------------------------------------------------------------
+/// @file	POC\BMI055.cpp.
+///
+/// @brief	Implements the bmi 055 class
+
 #include "BMI055.h"
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	BMI055IMU::BMI055IMU(BasicPOCModule* pocModule, list<Component*>& componentList, unsigned int bandwidth_hz)
+///
+/// @brief	Constructor
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @param [in,out]	pocModule	 	If non-null, the poc module.
+/// @param [in,out]	componentList	[in,out] If non-null, list of components.
+/// @param 		   	bandwidth_hz 	The bandwidth Hz.
 
 BMI055IMU::BMI055IMU(BasicPOCModule* pocModule, list<Component*>& componentList, unsigned int bandwidth_hz) : 
 	I2CComponent("BMI055 Acceleration Sensor", 0x18, false, 100000, pocModule, componentList), bandwidth_hz(bandwidth_hz) {
 
 }
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	void BMI055IMU::init()
+///
+/// @brief	Initializes this object
+///
+/// @author	Benjamin
+/// @date	28.09.2020
 
 void BMI055IMU::init() {
 	//reset
@@ -24,9 +49,29 @@ void BMI055IMU::init() {
 	writeRegister(0x11, 0b00000000);
 }
 
+///-------------------------------------------------------------------------------------------------
+/// @fn	void BMI055IMU::selfTest()
+///
+/// @brief	Tests self
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+
 void BMI055IMU::selfTest() {
 	//TODO
 }
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	void BMI055IMU::getAccelerationData(queue<int>& accelerationX, queue<int>& accelerationY, queue<int>& accelerationZ)
+///
+/// @brief	Gets acceleration data
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @param [in,out]	accelerationX	The acceleration x coordinate.
+/// @param [in,out]	accelerationY	The acceleration y coordinate.
+/// @param [in,out]	accelerationZ	The acceleration z coordinate.
 
 void BMI055IMU::getAccelerationData(queue<int>& accelerationX, queue<int>& accelerationY, queue<int>& accelerationZ) {
 	while(!accelerationX.empty()) accelerationX.pop();
@@ -59,9 +104,29 @@ void BMI055IMU::getAccelerationData(queue<int>& accelerationX, queue<int>& accel
 	}
 }
 
+///-------------------------------------------------------------------------------------------------
+/// @fn	char BMI055IMU::getTemperature()
+///
+/// @brief	Gets the temperature
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @returns	The temperature.
+
 char BMI055IMU::getTemperature() {
 	return readRegister(0x08);
 }
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	float BMI055IMU::getAvgBufferHealth() const
+///
+/// @brief	Gets average buffer health
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @returns	The average buffer health.
 
 float BMI055IMU::getAvgBufferHealth() const {
 	float result = 0;
@@ -76,14 +141,44 @@ float BMI055IMU::getAvgBufferHealth() const {
 	return result / 100;
 }
 
+///-------------------------------------------------------------------------------------------------
+/// @fn	unsigned int BMI055IMU::getBandwidth_hz() const
+///
+/// @brief	Gets bandwidth Hz
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @returns	The bandwidth Hz.
+
 unsigned int BMI055IMU::getBandwidth_hz() const {
 	return bandwidth_hz;
 }
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	BMI055Gyro::BMI055Gyro(BasicPOCModule* pocModule, list<Component*>& componentList, unsigned int bandwidth_hz)
+///
+/// @brief	Constructor
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @param [in,out]	pocModule	 	If non-null, the poc module.
+/// @param [in,out]	componentList	[in,out] If non-null, list of components.
+/// @param 		   	bandwidth_hz 	The bandwidth Hz.
 
 BMI055Gyro::BMI055Gyro(BasicPOCModule* pocModule, list<Component*>& componentList, unsigned int bandwidth_hz) :
 	I2CComponent("BMI055 Gyro", 0x68, false, 100000, pocModule, componentList), bandwidth_hz(bandwidth_hz) {
 
 }
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	void BMI055Gyro::init()
+///
+/// @brief	Initializes this object
+///
+/// @author	Benjamin
+/// @date	28.09.2020
 
 void BMI055Gyro::init() {
 	//Range
@@ -162,9 +257,27 @@ void BMI055Gyro::init() {
 	cout << "Offset is { " << rotationRateOffset_s.getX() << ", " << rotationRateOffset_s.getY() << ", " << rotationRateOffset_s.getZ() << " }" << endl;
 }
 
+///-------------------------------------------------------------------------------------------------
+/// @fn	void BMI055Gyro::selfTest()
+///
+/// @brief	Tests self
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+
 void BMI055Gyro::selfTest() {
 	//TODO
 }
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	void BMI055Gyro::getRotationRateData(queue<Vector3d<double>>& q)
+///
+/// @brief	Gets rotation rate data
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @param [in,out]	q	A queue&lt;Vector3d&lt;double&gt;&gt; to process.
 
 void BMI055Gyro::getRotationRateData(queue<Vector3d<double>>& q) {
 	//one frame contains 6 bytes, 2 bytes of data for each axis
@@ -183,15 +296,15 @@ void BMI055Gyro::getRotationRateData(queue<Vector3d<double>>& q) {
 	n = readRegister(0x0E) & 0b01111111;
 
 	//get n frames from the FIFO buffer
-	readRegister(0x3F, readBuffer, (n - 1) * framesize);
+	readRegister(0x3F, readBuffer, n * framesize);
 
 	//cout << (int)readBuffer[0] << ", " << (int)readBuffer[1] << endl;
 
-	//assemble vectors and push into queue
+	//assemble vectors and push into queue, divide by 262.4 for degrees or by 15034.4125 for radians
 	for (unsigned char i = 0; i < n; i++) {
-		Vector3d<double> temp{ static_cast<double>(static_cast<int16_t>((readBuffer[framesize * i + 1] << 8) | (readBuffer[framesize * i]))) / 262.4,
-			static_cast<double>(static_cast<int16_t>((readBuffer[framesize * i + 3] << 8) | (readBuffer[framesize * i + 2]))) / 262.4,
-			static_cast<double>(static_cast<int16_t>((readBuffer[framesize * i + 5] << 8) | (readBuffer[framesize * i + 4]))) / 262.4 };
+		Vector3d<double> temp{ static_cast<double>(static_cast<int16_t>((readBuffer[framesize * i + 1] << 8) | (readBuffer[framesize * i]))) / 15034.4125,
+			static_cast<double>(static_cast<int16_t>((readBuffer[framesize * i + 3] << 8) | (readBuffer[framesize * i + 2]))) / 15034.4125,
+			static_cast<double>(static_cast<int16_t>((readBuffer[framesize * i + 5] << 8) | (readBuffer[framesize * i + 4]))) / 15034.4125 };
 
 		q.push(temp);
 	}
@@ -204,6 +317,16 @@ void BMI055Gyro::getRotationRateData(queue<Vector3d<double>>& q) {
 		avgBufferHealth.pop();
 	}
 }
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	float BMI055Gyro::getAvgBufferHealth() const
+///
+/// @brief	Gets average buffer health
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @returns	The average buffer health.
 
 float BMI055Gyro::getAvgBufferHealth() const {
 	float result = 0;
@@ -218,9 +341,29 @@ float BMI055Gyro::getAvgBufferHealth() const {
 	return result / 100;
 }
 
+///-------------------------------------------------------------------------------------------------
+/// @fn	Vector3d<double> BMI055Gyro::getRotationOffset() const
+///
+/// @brief	Gets rotation offset
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @returns	The rotation offset.
+
 Vector3d<double> BMI055Gyro::getRotationOffset() const {
 	return rotationRateOffset_s;
 }
+
+///-------------------------------------------------------------------------------------------------
+/// @fn	unsigned int BMI055Gyro::getBandwidth_hz() const
+///
+/// @brief	Gets bandwidth Hz
+///
+/// @author	Benjamin
+/// @date	28.09.2020
+///
+/// @returns	The bandwidth Hz.
 
 unsigned int BMI055Gyro::getBandwidth_hz() const {
 	return bandwidth_hz;

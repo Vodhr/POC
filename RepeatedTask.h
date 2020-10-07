@@ -1,26 +1,39 @@
+///-------------------------------------------------------------------------------------------------
+/// @file	POC\RepeatedTask.h.
+///
+/// @brief	Declares the repeated task class. If an object of this class is instantiated, 
+
 #pragma once
 #include <thread>
 #include <functional>
+#include <chrono>
+#include <iostream>
 
 using namespace std;
 
-class RepeatedTask : thread
+class RepeatedTask
 {
+private:
 	bool shouldStop = false;
+	thread t;
+	function<void()> f;
+	chrono::steady_clock::duration waitTime = chrono::milliseconds(1000);
 
-	template<class T>
-	RepeatedTask(function<T>& f);
+
+public:
+	RepeatedTask(const function<void()>& f, const chrono::steady_clock::duration& waitTime = chrono::milliseconds(1000));
+
+	void start();
+
+	void setWaitTime(const chrono::steady_clock::duration& waitTime);
+
+	chrono::steady_clock::duration getWaitTime() const;
 	
 	virtual void stop();
+
+	bool getShouldStop() const;
+
+	~RepeatedTask();
 };
 
-template<class T>
-RepeatedTask::RepeatedTask(function<T>& f) : thread([this](Task* t) { while (!t->shouldStop) { f(); }}) {
 
-}
-
-//Stops the repeating task at the next opportunity and joins it with the current thread
-void RepeatedTask::stop() {
-	shouldStop = true;
-	join();
-}

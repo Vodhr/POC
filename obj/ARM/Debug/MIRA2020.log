@@ -1,5 +1,18 @@
 ﻿  Quellen werden überprüft.
-  Quellen werden remote nach "192.168.138.129" kopiert.
+  Quellen werden remote nach "orangepione" kopiert.
   Die Architektur wird überprüft.
   Die Architektur wird überprüft.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Application Type\Linux\1.0\Linux.targets(174,5): error : Die aktuelle Projektarchitektur "ARM" ist mit der Remotesystemarchitektur "x64" nicht kompatibel (x64). Wechseln Sie im Konfigurations-Manager zur Projektarchitektur "x64".
+  Remotebuild wird gestartet.
+  Quellen werden kompiliert:
+  ADS114S08B.cpp
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(8,35): warning : narrowing conversion of ‘(int)(((unsigned char)((int)reg)) | 32)’ from ‘int’ to ‘unsigned char’ inside { } [-Wnarrowing]
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(8,35): warning :   unsigned char readBuffer[2]{ reg | 0b00100000, 0 };
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(8,35): warning :                                ~~~~^~~~~~~~~~~~
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(14,36): warning : narrowing conversion of ‘(int)(((unsigned char)((int)reg)) | 64)’ from ‘int’ to ‘unsigned char’ inside { } [-Wnarrowing]
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(14,36): warning :   unsigned char writeBuffer[2]{ reg | 0b01000000, data };
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(14,36): warning :                                 ~~~~^~~~~~~~~~~~
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(24,22): warning : conversion from ‘int’ to ‘unsigned char’ may change value [-Wconversion]
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(24,22): warning :    writeRegister(2, i << 4);
+C:\Users\Benjamin\Desktop\POC\ADS114S08B.cpp(24,22): warning :                     ~~^~~~
+  Objekte werden verknüpft.
+  MIRA2020.vcxproj -> C:\Users\Benjamin\Desktop\POC\bin\ARM\Debug\MIRA2020.out

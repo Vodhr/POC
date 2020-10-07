@@ -1,3 +1,8 @@
+///-------------------------------------------------------------------------------------------------
+/// @file	POC\I2C.h.
+///
+/// @brief	Declares the I2C interface
+
 #pragma once
 #include <string>
 #include <iostream>
@@ -9,6 +14,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
+#include <mutex>
 
 using namespace std;
 
@@ -29,6 +35,8 @@ private:
 
 	/// @brief	True if this device supports 10 bit addressing
 	bool supports10BitAddressing;
+
+	static mutex i2cMutex;
 protected:
 
 	/// @brief	The I2C slave id of this device
@@ -36,32 +44,34 @@ protected:
 public:
 
 	///-------------------------------------------------------------------------------------------------
-	/// @fn	I2CDevice::I2CDevice(string name, short slaveID, bool supports10BitAddressing, long fmax);
+	/// @fn	I2C::I2C(short slaveID, bool supports10BitAddressing, long fmax);
 	///
 	/// @brief	Constructor
 	///
 	/// @author	Benjamin
 	/// @date	09.01.2020
 	///
-	/// @param 	name				   	The name of this device.
 	/// @param 	slaveID				   	The I2C slave id of this device.
 	/// @param 	supports10BitAddressing	True if this device supports 10 bit addressing.
-	/// @param 	fmax				   	The maximum frequency at which this device can operate on the I2C bus.
+	/// @param 	fmax				   	The maximum frequency at which this device can operate on the
+	/// 								I2C bus.
 
 	I2C(short slaveID, bool supports10BitAddressing, long fmax);
 
 	///-------------------------------------------------------------------------------------------------
-	/// @fn	void I2CDevice::transfere(char* tx, char* rx, int ntx, int nrx);
+	/// @fn	virtual void I2C::transfere(unsigned char* tx, unsigned char* rx, int ntx, int nrx);
 	///
-	/// @brief	Transmits ntx bytes from the tx array to this device, then receives nrx bytes into rx from this device
+	/// @brief	Transmits ntx bytes from the tx array to this device, then receives nrx bytes into rx
+	/// 		from this device
 	///
 	/// @author	Benjamin
 	/// @date	09.01.2020
 	///
-	/// @param [in]		tx 	If non-null, transmits ntx bytes from tx to this device 
-	/// @param [out]	rx 	If non-null, receives nrx bytes from the this device and stores them in rx
-	/// @param 		   	ntx	The number of bytes to be transmitted.
-	/// @param 		   	nrx	The number of bytes to be received.
+	/// @param [in]		tx 	If non-null, transmits ntx bytes from tx to this device.
+	/// @param [out]	rx 	If non-null, receives nrx bytes from the this device and stores them in
+	/// 					rx.
+	/// @param 			ntx	The number of bytes to be transmitted.
+	/// @param 			nrx	The number of bytes to be received.
 
 	virtual void transfere(unsigned char* tx, unsigned char* rx, int ntx, int nrx);
 
@@ -92,14 +102,15 @@ public:
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	virtual unsigned char I2C::readRegister(unsigned char reg);
 	///
-	/// @brief	Reads a register by first writing the register address and then reading from the device
+	/// @brief	Reads a register by first writing the register address and then reading from the
+	/// 		device
 	///
 	/// @author	Benjamin
 	/// @date	04.09.2020
 	///
 	/// @param 	reg	The register to be read from.
 	///
-	/// @returns	The the content of register or whatever the device returns 
+	/// @returns	The the content of register or whatever the device returns.
 
 	virtual unsigned char readRegister(unsigned char reg);
 
@@ -120,7 +131,8 @@ public:
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	virtual void I2C::writeRegister(unsigned char reg, unsigned char data);
 	///
-	/// @brief	Writes a register by first writing the register address and then writing the content to be stored in the register
+	/// @brief	Writes a register by first writing the register address and then writing the content
+	/// 		to be stored in the register
 	///
 	/// @author	Benjamin
 	/// @date	04.09.2020
@@ -133,14 +145,15 @@ public:
 	///-------------------------------------------------------------------------------------------------
 	/// @fn	virtual void I2C::writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n);
 	///
-	/// @brief	Writes one byte each from writeBuffer to the registers following reg for n registers. (Not supported by all devices)
+	/// @brief	Writes one byte each from writeBuffer to the registers following reg for n registers.
+	/// 		(Not supported by all devices)
 	///
 	/// @author	Benjamin
 	/// @date	04.09.2020
 	///
-	/// @param 	reg		   	The first register to be written to
+	/// @param 	reg		   	The first register to be written to.
 	/// @param 	writeBuffer	Buffer for write data.
-	/// @param 	n		   	The number of bytes to write to the register
+	/// @param 	n		   	The number of bytes to write to the register.
 
 	virtual void writeRegister(unsigned char reg, unsigned char writeBuffer[], unsigned int n);
 

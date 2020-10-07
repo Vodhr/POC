@@ -75,6 +75,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="ADS114S08B.cpp" />
     <ClCompile Include="ATtiny814.cpp" />
     <ClCompile Include="BasicPOCModule.cpp" />
     <ClCompile Include="BasicPOCModuleStatusEntry.cpp" />
@@ -89,10 +90,12 @@
     <ClCompile Include="PAC1720.cpp" />
     <ClCompile Include="POCController.cpp" />
     <ClCompile Include="I2CComponent.cpp" />
+    <ClCompile Include="RepeatedTask.cpp" />
     <ClCompile Include="SPIComponent.cpp" />
     <ClCompile Include="SPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ADS114S08B.h" />
     <ClInclude Include="ATtiny814.h" />
     <ClInclude Include="BasicPOCModule.h" />
     <ClInclude Include="BasicPOCModuleStatusEntry.h" />
